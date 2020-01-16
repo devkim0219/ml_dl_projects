@@ -1,4 +1,5 @@
 from sklearn.externals import joblib
+from sklearn import metrics
 import json
 
 # 1. python 3.3 이하 버전과 하위 호환을 위해서 사용
@@ -17,10 +18,17 @@ with open(LABEL_PATH, 'r') as f:
     clf_label = json.load(f)
 
 # 3. 예측 함수 (in: 텍스트, out: 예측결과)
+def predict_lang(text):
+    predict = clf.predict(text)
+
+    return predict
 
 # 4. 번역 함수 (현재: 파파고 연동, 향후: RMM 구현)
 
 # 이 코드는 개발 시 테스트 했던 코드이다.
 # 의도(개발 시) 될 때만 작동해야 한다.
 if __name__ == '__main__':
-    print('테스트', PI2)
+    print(type(clf))
+    print(clf)
+    print(type(clf_label))
+    print(clf_label)

@@ -2,17 +2,25 @@
 # 1. 모듈 가져오기
 from flask import Flask, render_template, request, jsonify, redirect
 from ml.mod import PI
-from ml import PI2
+from ml import PI2, predict_lang
 
 # 2. Flask 객체 생성
 app = Flask(__name__)
 
 # 3. 라우팅
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    print(PI, PI2)
+    if request.method == 'GET':        
+        return render_template('index.html')
+    
+    else:
+        input_text = request.form['input_text']
+        print(input_text)
 
-    return render_template('index.html')
+        # lang = edict_lang(input_text)
+        # print(laprng)
+
+        return jsonify({'na': input_text})
 
 # 4. 서버 가동
 if __name__ == '__main__':

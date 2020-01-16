@@ -4,11 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>언어감지 테스트</title>
 </head>
 <body>
     <div>
-        hello flask
+        <input type="text" id="detect_lang" value="언어감지" readonly="True" style="width: 150px; height: 50px; font-size: large; text-align: center;">
+    </div>
+    <div>
+        <textarea id="input_text" rows="10" style="width: 500px;"></textarea>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(function() {
+    $('#input_text').on("propertychange change keyup paste input", function() {
+        // alert('ajax 전송시작');
+        // alert($('#detect_lang').val())
+        $.ajax({
+            method: 'POST',
+            url: '/',
+            data: {
+                'input_text': $('#input_text').val(),
+                // 'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            dataType: 'json',
+            success: function(json) {
+                // alert('ajax 통신성공');
+                // alert(json.na)
+                if (json.na == 'en') {
+                    $('#detect_lang').attr('value', '영어')
+                } else if (json.na == 'fr') {
+                    $('#detect_lang').attr('value', '프랑스어')
+                } else if (json.na == 'ti') {
+                    $('#detect_lang').attr('value', '타갈리아어')
+                } else if (json.na == 'id') {
+                    $('#detect_lang').attr('value', '인도네시아어')
+                } else {
+                    $('#detect_lang').attr('value', '해당 언어 없음')
+                }
+                
+            },
+            error: function(request, error) {
+                alert(error)
+            }
+        })
+    })
+})
+</script>
 </html>
