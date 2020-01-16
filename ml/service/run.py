@@ -17,10 +17,10 @@ def home():
         input_text = request.form['input_text']
         print(input_text)
 
-        # lang = edict_lang(input_text)
-        # print(laprng)
+        lang = predict_lang(input_text)
+        print(lang)
 
-        return jsonify({'na': input_text})
+        return jsonify({'na': lang[0]})
 
 # 4. 서버 가동
 if __name__ == '__main__':

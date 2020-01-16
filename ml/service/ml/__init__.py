@@ -19,7 +19,21 @@ with open(LABEL_PATH, 'r') as f:
 
 # 3. 예측 함수 (in: 텍스트, out: 예측결과)
 def predict_lang(text):
-    predict = clf.predict(text)
+    try:
+        counts = [0 for n in range(26)]
+        limit_a = ord('a')
+
+        for word in text:    
+            counts[ord(word) - limit_a] += 1
+
+        total_count = sum(counts)
+
+        freq = list(map(lambda x: x / total_count, counts))
+
+        predict = clf.predict([freq])
+
+    except:
+        predict = ['unknown']
 
     return predict
 
