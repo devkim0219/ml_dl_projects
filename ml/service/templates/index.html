@@ -7,16 +7,22 @@
     <title>언어감지 테스트</title>
 </head>
 <body>
+    <h3>언어감지 테스트(번역안됨)</h3>
     <div>
         <input type="text" id="detect_lang" value="언어감지" readonly="True" style="width: 150px; height: 50px; font-size: large; text-align: center;">
     </div>
     <div>
-        <textarea id="input_text" rows="10" style="width: 500px;"></textarea>
+        <textarea id="input_text" rows="10" style="width: 400px;"></textarea>
+    </div>
+    <div>
+        <textarea id="trans_text" rows="10" style="width: 400px;" readonly=True></textarea>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(function() {
+    detect_lang = $('#detect_lang')
+
     $('#input_text').on("propertychange change keyup paste input", function() {
         // alert('ajax 전송시작');
         // alert($('#detect_lang').val())
@@ -31,18 +37,7 @@ $(function() {
             success: function(json) {
                 // alert('ajax 통신성공');
                 // alert(json.na)
-                if (json.na == 'en') {
-                    $('#detect_lang').attr('value', '영어')
-                } else if (json.na == 'fr') {
-                    $('#detect_lang').attr('value', '프랑스어')
-                } else if (json.na == 'tl') {
-                    $('#detect_lang').attr('value', '타갈리아어')
-                } else if (json.na == 'id') {
-                    $('#detect_lang').attr('value', '인도네시아어')
-                } else {
-                    $('#detect_lang').attr('value', '해당 언어 없음')
-                }
-                
+                detect_lang.attr('value', json.na_str)
             },
             error: function(request, error) {
                 alert(error)
