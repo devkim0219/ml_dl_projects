@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, jsonify, redirect
 
 # 언어감지 및 번역 모듈 가져오기
 from ml import detect_lang as dl, transfer_lang as tl
-from db import connect_db as cdb
+from db import insert_trans_log
 
 # 2. Flask 객체 생성
 app = Flask(__name__)
@@ -70,7 +70,12 @@ def transfer():
     tCode = res['message']['result']['tarLangType']
     tStc = res['message']['result']['translatedText']
 
-    cdb(na, tCode, oriText, tStc)
+    # 접속 오류 가능성만 있음
+    try:
+        insert_trans_log(na, tCode, oriText, tStc)
+
+    except:
+        pass
 
     # 응답
     return jsonify(res)
