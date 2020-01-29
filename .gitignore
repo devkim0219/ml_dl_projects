@@ -130,3 +130,7 @@ dmypy.json
 
 # vscode
 .vscode
+data
+DL
+ml/data/mnist/t10k.csv
+ml/data/mnist/train.csv
